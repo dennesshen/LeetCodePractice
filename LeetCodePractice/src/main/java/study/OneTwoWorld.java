@@ -39,9 +39,6 @@ public class OneTwoWorld {
 		
 	}
 	
-
-	//splitLimit 代表 target 這個數字按照規則最多可以拆成幾個數字相加
-	//resultList 用來存放可以的答案
 	public static void splitNumber(int target, int splitLimit, List<Integer> singleResult, List<List<Integer>> result) {
 		
 		int nowSum = singleResult.stream().mapToInt(Integer::intValue).sum();
