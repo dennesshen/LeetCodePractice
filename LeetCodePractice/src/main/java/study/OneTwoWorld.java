@@ -18,27 +18,13 @@ public class OneTwoWorld {
 		
 		System.out.println(target+"可以被拆分成：");
 		result.forEach(System.out::println);
-//		int upLimit = 1000;
-//		groupsShared = generateGroups(whichGroup(upLimit));
-//		
-//		for (int i = 3; i <= upLimit; i++) {
-//			List<List<Integer>> result = new ArrayList<>();
-//			List<Integer> singleResult = new ArrayList<>();
-//			splitNumber(i, whichGroup(i)-1, singleResult, result);
-//			if(result.size()==0) {
-//				System.out.println(i + "無法拆分");
-//			}else {
-//				System.out.println(i +"可以拆分");
-//			}
-//			
-//		}
-		
-		
-		
-		
-		
+
 	}
 	
+	// target : 欲拆分的目標數字 
+	// splitLimit 需要檢查的組別上限
+	// singleResult 拿來存放單一拆分答案的List 
+	// result 拿來存放所有符合的singleResult
 	public static void splitNumber(int target, int splitLimit, List<Integer> singleResult, List<List<Integer>> result) {
 		
 		int nowSum = singleResult.stream().mapToInt(Integer::intValue).sum();
