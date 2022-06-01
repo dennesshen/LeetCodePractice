@@ -10,16 +10,45 @@ public class OneTwoWorld {
 	private static List<List<Integer>> groupsShared;
 	
 	public static void main(String[] args) {
-		int target = 15;
+		int target = 100000;
 		groupsShared = generateGroups(whichGroup(target));
-		List<List<Integer>> result = new ArrayList<>();
-		List<Integer> singleResult = new ArrayList<>();
-		splitNumber(target, whichGroup(target)-1, singleResult, result);
 		
-		System.out.println(target+"可以被拆分成：");
-		result.forEach(System.out::println);
+		for (int i = 1; i <=target; i++) {
+			List<List<Integer>> result = new ArrayList<>();
+			List<Integer> singleResult = new ArrayList<>();
+			ifSplitable(i, whichGroup(i)-1, singleResult, result);
+			if (result.size()==0) {
+				System.out.println(i+"不可被拆分");
+			}
+		}
 
 	}
+	
+	//檢查target是否可以拆分
+	public static void ifSplitable(int target, int splitLimit, List<Integer> singleResult, List<List<Integer>> result) {
+		
+		int nowSum = singleResult.stream().mapToInt(Integer::intValue).sum();
+		if (nowSum == target) {
+			List<Integer> deepCopyList = List.copyOf(singleResult);
+			result.add(deepCopyList);
+			return;
+		}
+		if (splitLimit-1<0 || nowSum>target) return;
+		
+		List<Integer> nowGroup = groupsShared.get(splitLimit-1);	
+		for (int i = nowGroup.size()-1; i>=-1; i--) {
+			if (i>=0) {
+				singleResult.add(nowGroup.get(i));
+			}else {
+				singleResult.add(0);
+			}
+			ifSplitable(target, splitLimit-1, singleResult, result);
+			if(singleResult.stream().mapToInt(Integer::intValue).sum() == target) break;
+			singleResult.remove(singleResult.size()-1);
+		}
+		return;
+	}
+	
 	
 	// target : 欲拆分的目標數字 
 	// splitLimit 需要檢查的組別上限
@@ -33,7 +62,7 @@ public class OneTwoWorld {
 			result.add(deepCopyList);
 			return;
 		}
-		if (splitLimit-1<0) return;
+		if (splitLimit-1<0 || nowSum>target) return;
 		
 		List<Integer> nowGroup = groupsShared.get(splitLimit-1);	
 		for (int i = nowGroup.size()-1; i>=-1; i--) {
