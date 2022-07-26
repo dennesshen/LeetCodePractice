@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.BinaryOperator;
 
 /*
 524. Longest Word in Dictionary through Deleting：
@@ -28,65 +29,64 @@ Output: "a"
  * @author christinehsieh
  */
 public class Solution_2 {
-	
-	public  String findLongestWord(String s, List<String> dictionary) {
-        Set<String> resultSet = new LinkedHashSet<>();
-        
+
+	public String findLongestWord(String s, List<String> dictionary) {
+		Set<String> resultSet = new LinkedHashSet<>();
+
 		for (String dictionary_string : dictionary) {
 			compare(s, dictionary_string, resultSet);
 		}
+
+		BinaryOperator<String> accumulator = (s1, s2) -> {
+			if (s1.length() > s2.length()) {
+				return s1;
+			} else if (s1.length() < s2.length()) {
+				return s2;
+			}
+			return compareLexicographicalOrder(s1, s2);
+		};
 		
-		String answer =
-		resultSet.stream().reduce((s1, s2) -> {
-												  if (s1.length() > s2.length()) {
-													  return s1;
-												  }else if (s1.length() < s2.length()) {
-													  return s2;
-												  }
-												  return compareLexicographicalOrder(s1, s2);
-													
-								  })
-						  .orElseGet(() -> "");
-		
+		String answer = resultSet.stream().reduce(accumulator).orElseGet(() -> "");
+
 		return answer;
-    }
-	
-	private static void compare(String content, String target, Set<String> answerSet){
-		
+	}
+
+	private static void compare(String content, String target, Set<String> answerSet) {
+
 		int contentIndex = 0;
 		int targetIndex = 0;
-		
+
 		for (int i = 0; i < target.length(); i++) {
-			
+
 			char targetWord = target.charAt(i);
-			
+
 			for (int j = contentIndex; j < content.length(); j++) {
-				
+
 				if (targetWord == content.charAt(j)) {
-					contentIndex = j+1;
-					targetIndex +=1;
+					contentIndex = j + 1;
+					targetIndex += 1;
 					break;
 				}
 			}
-			
-			if (i == targetIndex) break;
-			
+
+			if (i == targetIndex)
+				break;
+
 		}
-		
+
 		if (targetIndex == target.length()) {
 			answerSet.add(target);
 		}
 	}
-	
-	
+
 	private static String compareLexicographicalOrder(String s1, String s2) {
-		
+
 		if (s1.compareTo(s2) > 0) {
 			return s2;
-		}else{
+		} else {
 			return s1;
 		}
-		
+
 	}
-	
+
 }
