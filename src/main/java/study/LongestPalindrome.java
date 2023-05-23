@@ -21,7 +21,7 @@ public class LongestPalindrome {
     		}
     		if(expandNumber*2 > compareNumber) {
     			compareNumber = expandNumber*2;
-    			indexStart = i - expandNumber +1;
+    			indexStart = i - expandNumber + 1;
     			indexEnd = i + expandNumber;
     		}
     		expandNumber = 0;

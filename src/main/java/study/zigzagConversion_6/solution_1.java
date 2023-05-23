@@ -1,15 +1,11 @@
-package study;
+package study.zigzagConversion_6;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ZigzagConversion_6 {
+public class solution_1 {
 	
-	public static void main(String[] args) {
-		String result = new ZigzagConversion_6().convert("AB",  2);
-		System.out.println(result);
-	}
 
 	
 	 public String convert(String s, int numRows) {
@@ -23,7 +19,6 @@ public class ZigzagConversion_6 {
 		}
 		
 		for (int i = 1; i <= s.length(); i++) {
-			char word = s.charAt(i-1);
 			boolean ifCategorize = false;
 			
 			for (int j = 1; j <= numRows; j++) {
